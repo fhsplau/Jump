@@ -1,0 +1,8 @@
+Suite tags: @new,@ok,@jira
+Documentation: This is my documentation
+
+Test scenario: Print greetings with my name
+    Given my name is Piotr
+    And my surname is Kacprzak
+    When I execute my method
+    Then I should see "Hello Piotr Kacprzak"
