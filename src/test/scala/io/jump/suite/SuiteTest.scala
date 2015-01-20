@@ -36,8 +36,12 @@ class SuiteTest extends FunSuite with BeforeAndAfter {
     assert(suite.tags === suiteTags)
   }
 
-  ignore("no documentation"){
-    assert(suite2.doc === None)
+  test("no documentation"){
+    assert(suite2.doc === "")
+  }
+
+  test("no tags") {
+    assert(suite2.tags === List())
   }
 
 }
