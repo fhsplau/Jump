@@ -14,9 +14,14 @@ class SuiteTest extends FunSuite with BeforeAndAfter {
   val name = "my_bdd_test.suite"
   val name2 = "my_bdd_test2.suite"
   val suiteFile = new File(path + "/" + name)
-  val suiteFile2 = new File(path+"/"+name2)
+  val suiteFile2 = new File(path + "/" + name2)
   val suiteTags = List("@new", "@ok", "@jira")
   val suiteDoc = "This is my documentation"
+  val tests = List(new Test(List("Test scenario: Print greetings with my name",
+    "Given my name is Piotr",
+    "And my surname is Kacprzak",
+    "When I execute my method",
+    "Then I should see Hello Piotr Kacprzak")))
 
   before {
     suite = new Suite(suiteFile)
@@ -28,7 +33,7 @@ class SuiteTest extends FunSuite with BeforeAndAfter {
 
   }
 
-  test("documentation"){
+  test("documentation") {
     assert(suite.doc === suiteDoc)
   }
 
@@ -36,12 +41,16 @@ class SuiteTest extends FunSuite with BeforeAndAfter {
     assert(suite.tags === suiteTags)
   }
 
-  test("no documentation"){
+  test("no documentation") {
     assert(suite2.doc === "")
   }
 
   test("no tags") {
     assert(suite2.tags === List())
+  }
+
+  test("list with tests") {
+    assert(suite.tests === tests)
   }
 
 }
