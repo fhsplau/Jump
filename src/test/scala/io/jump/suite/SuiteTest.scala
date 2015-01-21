@@ -10,11 +10,14 @@ class SuiteTest extends FunSuite with BeforeAndAfter {
 
   var suite: Suite = _
   var suite2: Suite = _
+  var suite3: Suite = _
   val path = "/Users/piotr.kacprzak/svn/Jump/src/test/BDD"
   val name = "my_bdd_test.suite"
   val name2 = "my_bdd_test2.suite"
+  val name3 = "pref_bdd_test.suite"
   val suiteFile = new File(path + "/" + name)
   val suiteFile2 = new File(path + "/" + name2)
+  val suiteFile3 = new File(path + "/" + name3)
   val suiteTags = List("@new", "@ok", "@jira")
   val suiteDoc = "This is my documentation"
   val tests = List(new Test(List("Test scenario: Print greetings with my name",
@@ -51,6 +54,11 @@ class SuiteTest extends FunSuite with BeforeAndAfter {
 
   test("list with tests") {
     assert(suite.tests === tests)
+  }
+
+  test("test bigfile") {
+    suite3 = new Suite(suiteFile3)
+    assert(suite3.tests.size === 2784)
   }
 
 }
