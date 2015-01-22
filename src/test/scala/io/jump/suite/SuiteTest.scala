@@ -72,8 +72,12 @@ class SuiteTest extends FunSuite with BeforeAndAfter {
     assert(suiteWithoutAt.tests === List())
   }
 
-  ignore("non existing suite") {
-    val suiteWithoutAt = new Suite(path + "/" + "non_existing_suite.suite")
+  test("non existing suite") {
+    withClue("[error] File not found"){
+      intercept[Exception]{
+        new Suite(path+"/"+"non_existing_suite.suite")
+      }
+    }
 
   }
 

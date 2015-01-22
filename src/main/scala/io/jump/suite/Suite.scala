@@ -1,6 +1,6 @@
 package io.jump.suite
 
-import java.io.File
+import java.io.{File, FileNotFoundException}
 
 import scala.io.Source
 
@@ -22,12 +22,24 @@ trait ContentMatcher {
   }
 }
 
+trait SuiteContent {
+  protected val f: File
+
+  val tests: List[Test]
+
+  protected def getContent(path: String): List[String] = try {
+    Source.fromFile(f).getLines().toList
+  } catch {
+    case e: FileNotFoundException => throw new Exception("[error] File not found")
+  }
+}
 //  Get or else
 abstract class Content extends ContentMatcher {
 
   val name: String
   val tags: List[String]
   val doc: String
+
 
   def getTags(tagsType: String): List[String] = matchFields("@" + tagsType + " tags" + ":") match {
     case Some(i) => i.split(",").toList.map(_.replace(" ", ""))
@@ -46,11 +58,11 @@ case class Test(content: List[String]) extends Content {
   override val tags: List[String] = List()
 }
 
-case class Suite(private val path: String) extends Content {
+case class Suite(private val path: String) extends Content with SuiteContent {
 
-  val f = new File(path)
+  override val f = new File(path)
 
-  override protected val content = Source.fromFile(f).getLines().toList
+  override protected val content = getContent(path)
 
   override val name: String = f.getName
 
@@ -58,7 +70,7 @@ case class Suite(private val path: String) extends Content {
 
   override val doc: String = getDoc("Documentation")
 
-  val tests: List[Test] = {
+  override val tests: List[Test] = {
     def findTests(lines: List[String], acc: List[Int], currLine: Int): List[Int] =
       if (lines.isEmpty) acc
       else findTests(
