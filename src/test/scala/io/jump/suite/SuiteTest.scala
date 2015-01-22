@@ -15,6 +15,7 @@ class SuiteTest extends FunSuite with BeforeAndAfter {
   val name = "my_bdd_test.suite"
   val name2 = "my_bdd_test2.suite"
   val name3 = "pref_bdd_test.suite"
+  val withoutTests = "suite_without_tests.suite"
   val suiteFile = new File(path + "/" + name)
   val suiteFile2 = new File(path + "/" + name2)
   val suiteFile3 = new File(path + "/" + name3)
@@ -59,6 +60,11 @@ class SuiteTest extends FunSuite with BeforeAndAfter {
   test("test bigfile") {
     suite3 = new Suite(suiteFile3)
     assert(suite3.tests.size === 2784)
+  }
+  
+  test("suite without tests") {
+    val suiteWithoutTests = new Suite(new File(path+"/"+withoutTests))
+    assert(suiteWithoutTests.tests === List())
   }
 
 }

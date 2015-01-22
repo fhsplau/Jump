@@ -4,6 +4,12 @@ import java.io.File
 
 import scala.io.Source
 
+// TODO create deleteWhiteSpaces method
+// TODO suite's fields should start with @
+// TODO non existing file
+// TODO read and think about scala's futures
+
+
 trait ContentMatcher {
   protected val content: List[String]
 
@@ -45,25 +51,28 @@ case class Suite(private val f: File) extends Content {
 
   override protected val content = Source.fromFile(f).getLines().toList
 
-  override val name = f.getName
+  override val name: String = f.getName
 
-  override val tags = getTags("Suite")
+  override val tags: List[String] = getTags("Suite")
 
-  override val doc = getDoc("Documentation")
+  override val doc: String = getDoc("Documentation")
 
-  val tests = {
-    def findTests(l: List[String], acc: List[Int], currLine: Int): List[Int] =
-      if (l.isEmpty) acc
+  val tests: List[Test] = {
+    def findTests(lines: List[String], acc: List[Int], currLine: Int): List[Int] =
+      if (lines.isEmpty) acc
       else findTests(
-        l.tail,
-        if (l.head.contains("Test")) acc ::: List(currLine) else acc,
+        lines.tail,
+        if (lines.head.contains("Test")) acc ::: List(currLine) else acc,
         currLine + 1
       )
 
-    def getTests(testIndexes: List[Int]): List[Test] = {
-      if (testIndexes.size == 1) List(new Test(getTest(testIndexes.head, content.size)))
-      else List(new Test(getTest(testIndexes.head, testIndexes(1)))) ::: getTests(testIndexes.tail)
+    def getTests(indexes: List[Int]): List[Test] = indexes match {
+      case i if i.isEmpty => List()
+      case i if i.size == 1 => List(createTest(i.head, content.size))
+      case _ => List(createTest(indexes.head, indexes(1))) ::: getTests(indexes.tail)
     }
+
+    def createTest(a: Int, b: Int): Test = new Test(getTest(a,b))
 
     def getTest(b: Int, e: Int): List[String] =
       if (b >= e) List()
