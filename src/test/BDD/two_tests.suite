@@ -1,0 +1,14 @@
+@Suite tags: new, ok
+@Documentation: This is my documentation
+
+@Test scenario: Print greetings with my name
+    Given my name is Piotr
+    And my surname is Kacprzak
+    When I execute my method
+    Then I should see Hello Piotr Kacprzak
+
+@Test scenario: Print greetings with my name second
+    Given my name is Test
+    And my surname is Kacprzak
+    When I execute my method
+    Then I should see Hello Piotr Kacprzak

@@ -19,9 +19,9 @@ class SuiteTest extends FunSuite with BeforeAndAfter {
   val suiteFile = new File(path + "/" + name)
   val suiteFile2 = new File(path + "/" + name2)
   val suiteFile3 = new File(path + "/" + name3)
-  val suiteTags = List("@new", "@ok", "@jira")
+  val suiteTags = List("new", "ok")
   val suiteDoc = "This is my documentation"
-  val tests = List(new Test(List("Test scenario: Print greetings with my name",
+  val tests = List(new Test(List("@Test scenario: Print greetings with my name",
     "Given my name is Piotr",
     "And my surname is Kacprzak",
     "When I execute my method",
@@ -57,7 +57,7 @@ class SuiteTest extends FunSuite with BeforeAndAfter {
     assert(suite.tests === tests)
   }
 
-  test("test bigfile") {
+  ignore("test bigfile") {
     suite3 = new Suite(suiteFile3)
     assert(suite3.tests.size === 2784)
   }
@@ -65,6 +65,11 @@ class SuiteTest extends FunSuite with BeforeAndAfter {
   test("suite without tests") {
     val suiteWithoutTests = new Suite(new File(path+"/"+withoutTests))
     assert(suiteWithoutTests.tests === List())
+  }
+
+  test("only one test if word 'test' is part of the step") {
+    val suiteWithTwoTests = new Suite(new File(path+"/"+"two_tests.suite"))
+    assert(suiteWithTwoTests.tests.size === 2)
   }
 
 }

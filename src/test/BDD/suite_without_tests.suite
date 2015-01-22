@@ -1,2 +1,2 @@
-Suite tags: @new,@ok,@jira
-Documentation: This is my documentation
+@Suite tags: new, ok
+@Documentation: This is my documentation
