@@ -5,7 +5,6 @@ import java.io.{File, FileNotFoundException}
 import scala.io.Source
 
 // TODO create deleteWhiteSpaces method
-// TODO non existing file
 // TODO read and think about scala's futures
 
 
