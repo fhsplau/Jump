@@ -29,12 +29,12 @@ abstract class Content extends ContentMatcher {
   val tags: List[String]
   val doc: String
 
-  def getTags(tagsType: String): List[String] = matchFields("@"+tagsType + " tags" + ":") match {
+  def getTags(tagsType: String): List[String] = matchFields("@" + tagsType + " tags" + ":") match {
     case Some(i) => i.split(",").toList.map(_.replace(" ", ""))
     case None => List()
   }
 
-  def getDoc(docType: String): String = matchFields("@"+docType + ":") match {
+  def getDoc(docType: String): String = matchFields("@" + docType + ":") match {
     case Some(i) => if (i.head == ' ') i.tail else i
     case None => ""
   }
@@ -46,7 +46,9 @@ case class Test(content: List[String]) extends Content {
   override val tags: List[String] = List()
 }
 
-case class Suite(private val f: File) extends Content {
+case class Suite(private val path: String) extends Content {
+
+  val f = new File(path)
 
   override protected val content = Source.fromFile(f).getLines().toList
 
@@ -71,7 +73,7 @@ case class Suite(private val f: File) extends Content {
       case _ => List(createTest(indexes.head, indexes(1))) ::: getTests(indexes.tail)
     }
 
-    def createTest(a: Int, b: Int): Test = new Test(getTest(a,b))
+    def createTest(a: Int, b: Int): Test = new Test(getTest(a, b))
 
     def getTest(b: Int, e: Int): List[String] =
       if (b >= e) List()
