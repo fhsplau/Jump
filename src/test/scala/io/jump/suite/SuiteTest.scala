@@ -72,4 +72,11 @@ class SuiteTest extends FunSuite with BeforeAndAfter {
     assert(suiteWithTwoTests.tests.size === 2)
   }
 
+  test("suite's fields without '@'") {
+    val suiteWithoutAt = new Suite(new File(path+"/"+"suite_without_at.suite"))
+    assert(suiteWithoutAt.doc === "")
+    assert(suiteWithoutAt.tags === List())
+    assert(suiteWithoutAt.tests === List())
+  }
+
 }
