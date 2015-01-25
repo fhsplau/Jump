@@ -32,9 +32,13 @@ abstract class Content extends ContentMatcher {
   val name: String
   val tags: List[String]
 
+  def getDoc(docType: String): String = matchFields("@" + docType + ":") match {
+    case Some(i) => if (i.head == ' ') i.tail else i
+    case None => ""
+  }
 }
 
-trait SuiteContent extends Content{
+trait SuiteContent extends Content {
   protected val f: File
 
   val doc: String
@@ -45,11 +49,6 @@ trait SuiteContent extends Content{
   } catch {
     case e: FileNotFoundException => throw new Exception("[error] File not found")
   }
-
-  def getDoc(docType: String): String = matchFields("@" + docType + ":") match {
-    case Some(i) => if (i.head == ' ') i.tail else i
-    case None => ""
-  }
 }
 
 trait TestContent extends Content {
@@ -57,9 +56,16 @@ trait TestContent extends Content {
 }
 
 case class Test(content: List[String]) extends TestContent {
-  override val name: String = ""
-  override val tags: List[String] = List()
-  override val steps: List[String] = List()
+  override val name: String = getDoc("Test scenario")
+
+  override val tags: List[String] = getTags("Test")
+
+  override val steps: List[String] = {
+    def getSteps(l: List[String]): List[String] =
+      if (l.isEmpty) List()
+      else (if (l.head.contains("@")) List() else List(l.head)) ::: getSteps(l.tail)
+    getSteps(content)
+  }
 }
 
 case class Suite(private val path: String) extends SuiteContent {

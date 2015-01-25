@@ -20,6 +20,18 @@ class SuiteTest extends FunSuite with BeforeAndAfter {
     "When I execute my method",
     "Then I should see Hello Piotr Kacprzak")))
 
+  val aTest = new Test(List("@Test scenario: Print greetings with my name",
+    "@Test tags: another, pp",
+    "Given my name is Piotr",
+    "And my surname is Kacprzak",
+    "When I execute my method",
+    "Then I should see Hello Piotr Kacprzak"))
+
+  val steps = List("Given my name is Piotr",
+    "And my surname is Kacprzak",
+    "When I execute my method",
+    "Then I should see Hello Piotr Kacprzak")
+
   before {
     suite = new Suite(path + "/" + name)
     suite2 = new Suite(path + "/" + name2)
@@ -73,12 +85,24 @@ class SuiteTest extends FunSuite with BeforeAndAfter {
   }
 
   test("non existing suite") {
-    withClue("[error] File not found"){
-      intercept[Exception]{
-        new Suite(path+"/"+"non_existing_suite.suite")
+    withClue("[error] File not found") {
+      intercept[Exception] {
+        new Suite(path + "/" + "non_existing_suite.suite")
       }
     }
 
+  }
+
+  test("proper test name") {
+    assert(aTest.name === "Print greetings with my name")
+  }
+
+  test("proper tags") {
+    assert(aTest.tags === List("another", "pp"))
+  }
+
+  test("proper steps") {
+    assert(aTest.steps === steps)
   }
 
 }
