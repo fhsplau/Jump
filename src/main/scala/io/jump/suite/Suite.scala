@@ -7,7 +7,7 @@ import scala.io.Source
 // TODO create deleteWhiteSpaces method
 // TODO read and think about scala's futures
 
-trait SuiteContent extends Content {
+sealed trait SuiteContent extends Content {
   protected val f: File
 
   val doc: String
