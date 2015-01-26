@@ -13,10 +13,10 @@ class TestClassTests extends FunSuite{
     "When I execute my method",
     "Then I should see Hello Piotr Kacprzak"))
 
-  val steps = List("Given my name is Piotr",
-    "And my surname is Kacprzak",
-    "When I execute my method",
-    "Then I should see Hello Piotr Kacprzak")
+  val steps = List(new Step("Given my name is Piotr"),
+    new Step("And my surname is Kacprzak"),
+    new Step("When I execute my method"),
+    new Step("Then I should see Hello Piotr Kacprzak"))
 
   test("proper test name") {
     assert(aTest.name === "Print greetings with my name")

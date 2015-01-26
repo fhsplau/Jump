@@ -1,7 +1,7 @@
 package io.jump.suite
 
 sealed trait TestContent extends Content {
-  val steps: List[String]
+  val steps: List[Step]
 }
 
 case class Test(private val testList: List[String]) extends TestContent {
@@ -11,10 +11,10 @@ case class Test(private val testList: List[String]) extends TestContent {
 
   override val tags: List[String] = getTags("Test")
 
-  override val steps: List[String] = {
-    def getSteps(l: List[String]): List[String] =
+  override val steps: List[Step] = {
+    def getSteps(l: List[String]): List[Step] =
       if (l.isEmpty) List()
-      else (if (l.head.contains("@")) List() else List(l.head)) ::: getSteps(l.tail)
+      else (if (l.head.contains("@")) List() else List(new Step(l.head))) ::: getSteps(l.tail)
     getSteps(content)
   }
 }
