@@ -17,4 +17,7 @@ class StepTest extends FunSuite with BeforeAndAfter{
     assert(step.tag === "Given")
   }
 
+  test("proper step's name") {
+    assert(step.name === "my name is Piotr")
+  }
 }
