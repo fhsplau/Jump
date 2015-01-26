@@ -55,7 +55,9 @@ trait TestContent extends Content {
   val steps: List[String]
 }
 
-case class Test(content: List[String]) extends TestContent {
+case class Test(private val testList: List[String]) extends TestContent {
+  override protected val content = testList
+
   override val name: String = getDoc("Test scenario")
 
   override val tags: List[String] = getTags("Test")
