@@ -5,8 +5,10 @@ object Enums{
   object Tags extends Enumeration {
     type Tags = Value
 
-    val SUITE = Value("@Suite")
-    val TEST = Value("@Test")
+    private val TAG_FIELD_END = " tags"
+
+    val SUITE = Value("@Suite"+TAG_FIELD_END)
+    val TEST = Value("@Test"+TAG_FIELD_END)
   }
 
   object Doc extends Enumeration {
