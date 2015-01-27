@@ -39,7 +39,7 @@ case class Suite(private val path: String) extends SuiteContent {
       if (lines.isEmpty) acc
       else findTests(
         lines.tail,
-        if (lines.head.contains("@Test")) acc ::: List(currLine) else acc,
+        if (lines.head.contains(Tags.TEST.toString)) acc ::: List(currLine) else acc,
         currLine + 1
       )
 
