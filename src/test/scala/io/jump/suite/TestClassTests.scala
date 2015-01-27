@@ -13,6 +13,9 @@ class TestClassTests extends FunSuite{
     "When I execute my method",
     "Then I should see Hello Piotr Kacprzak"))
 
+  val aTest2= new Test(List("@Test scenario: Print greetings with my name",
+    ""))
+
   val steps = List(new Step("Given my name is Piotr"),
     new Step("And my surname is Kacprzak"),
     new Step("When I execute my method"),
@@ -28,6 +31,21 @@ class TestClassTests extends FunSuite{
 
   test("proper steps") {
     assert(aTest.steps === steps)
+  }
+
+  test("step as empty line") {
+    assert(aTest2.steps === List())
+  }
+
+  test("only field in test no steps") {
+    val aTest3 = new Test(List("@Test scenario: Print greetings with my name"))
+    assert(aTest3.steps === List())
+  }
+
+  test("empty list"){
+    val aTest3 = new Test(List())
+
+    assert(aTest3.steps === List())
   }
 
 }
