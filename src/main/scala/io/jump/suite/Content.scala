@@ -1,6 +1,7 @@
 package io.jump.suite
 
 import Enums.Tags._
+import Enums.Doc._
 
 sealed trait ContentMatcher {
   protected val content: List[String]
@@ -26,7 +27,7 @@ abstract class Content extends ContentMatcher {
   val name: String
   val tags: List[String]
 
-  def getDoc(docType: String): String = matchFields("@" + docType + ":") match {
+  def getDoc(docType: Doc): String = matchFields(docType.toString + ":") match {
     case Some(i) => if (i.head == ' ') i.tail else i
     case None => ""
   }
