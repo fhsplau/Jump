@@ -1,7 +1,7 @@
 package io.jump.suite
 
 import java.io.{File, FileNotFoundException}
-
+import Enums.Tags._
 import scala.io.Source
 
 // TODO create deleteWhiteSpaces method
@@ -28,7 +28,7 @@ case class Suite(private val path: String) extends SuiteContent {
 
   override protected val content = getContent(path)
 
-  override val tags: List[String] = getTags("Suite")
+  override val tags: List[String] = getTags(SUITE)
 
   override val doc: String = getDoc("Documentation")
 

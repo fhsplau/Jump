@@ -1,5 +1,7 @@
 package io.jump.suite
 
+import Enums.Tags._
+
 sealed trait ContentMatcher {
   protected val content: List[String]
 
@@ -12,7 +14,7 @@ sealed trait ContentMatcher {
     }
   }
 
-  def getTags(tagsType: String): List[String] = matchFields("@" + tagsType + " tags" + ":") match {
+  def getTags(tagsType: Tags): List[String] = matchFields(tagsType.toString+ " tags" + ":") match {
     case Some(i) => i.split(",").toList.map(_.replace(" ", ""))
     case None => List()
   }
