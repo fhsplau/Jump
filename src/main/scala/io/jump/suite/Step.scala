@@ -1,9 +1,11 @@
 package io.jump.suite
 
-case class Step(step: String) {
+case class Step(private val step: String) {
 
-  val tag:String = step.split(" ")(0)
+  private val stepList = step.split(" ").map(_.replace(" ", "")).filter(_.size > 0)
 
-  val name:String = step.split(" ").tail.mkString(" ")
+  val tag: String = stepList(0)
+
+  val name: String = stepList.tail.mkString(" ")
 
 }
