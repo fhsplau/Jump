@@ -14,7 +14,7 @@ case class Test(private val testList: List[String]) extends TestContent {
   override val steps: List[Step] = {
     def getSteps(l: List[String]): List[Step] =
       if (l.isEmpty) List()
-      else (if (l.head.contains("@")) List() else List(new Step(l.head))) ::: getSteps(l.tail)
+      else (if (l.head.contains("@") || l.head.size <= 1) List() else List(new Step(l.head))) ::: getSteps(l.tail)
     getSteps(content)
   }
 }
