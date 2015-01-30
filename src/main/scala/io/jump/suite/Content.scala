@@ -44,6 +44,11 @@ sealed trait ContentMatcher extends Common {
     case Some(i) => i.split(TAG_SEPARATOR).toList.map(_.replace(WHITE_SPACE, EMPTY_STRING))
     case None => List()
   }
+
+  def getDoc(docType: String): String = matchFields(docType + FIELD_SEPARATOR) match {
+    case Some(i) => if (i.head.toString == WHITE_SPACE) i.tail else i
+    case None => EMPTY_STRING
+  }
 }
 
 //  Get or else
@@ -52,9 +57,5 @@ abstract class Content extends ContentMatcher with Tags with Doc with TestScenar
   val name: String
   val tags: List[String]
 
-  def getDoc(docType: String): String = matchFields(docType + FIELD_SEPARATOR) match {
-    case Some(i) => if (i.head.toString == WHITE_SPACE) i.tail else i
-    case None => EMPTY_STRING
-  }
 }
 
