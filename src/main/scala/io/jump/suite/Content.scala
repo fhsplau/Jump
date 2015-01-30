@@ -18,8 +18,8 @@ sealed trait Tags extends Field {
 }
 
 sealed trait Doc extends Field {
-  val SUITE_DOC = FIELD_POINTER + "Documentation"
-  val TEST_DOC = FIELD_POINTER + "Test scenario"
+  val SUITE_DOC = FIELD_POINTER + "Documentation" + FIELD_SEPARATOR
+  val TEST_DOC = FIELD_POINTER + "Test scenario" + FIELD_SEPARATOR
 }
 
 sealed trait TestScenario extends Field {
@@ -45,8 +45,8 @@ sealed trait ContentMatcher extends Common {
     case None => List()
   }
 
-  def getDoc(docType: String): String = matchFields(docType + FIELD_SEPARATOR) match {
-    case Some(i) => if (i.head.toString == WHITE_SPACE) i.tail else i
+  def getDoc(docType: String): String = matchFields(docType) match {
+    case Some(i) => if (WHITE_SPACE equals i.head.toString) i.tail else i
     case None => EMPTY_STRING
   }
 }
