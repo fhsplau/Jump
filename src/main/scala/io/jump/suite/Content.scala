@@ -1,11 +1,10 @@
 package io.jump.suite
 
-import io.jump.suite.Enums.Doc._
-import io.jump.suite.Enums.Tags._
-
 sealed trait Separators {
   val FIELD_SEPARATOR = ":"
   val TAG_SEPARATOR = ","
+  val WHITE_SPACE = " "
+  val EMPTY = ""
 }
 
 sealed trait ContentMatcher extends Separators{
@@ -20,8 +19,8 @@ sealed trait ContentMatcher extends Separators{
     }
   }
 
-  def getTags(tagsType: Tags): List[String] = matchFields(tagsType.toString + FIELD_SEPARATOR) match {
-    case Some(i) => i.split(TAG_SEPARATOR).toList.map(_.replace(" ", ""))
+  def getTags(tagsType: String): List[String] = matchFields(tagsType + FIELD_SEPARATOR) match {
+    case Some(i) => i.split(TAG_SEPARATOR).toList.map(_.replace(WHITE_SPACE, EMPTY))
     case None => List()
   }
 }
@@ -32,8 +31,8 @@ abstract class Content extends ContentMatcher {
   val name: String
   val tags: List[String]
 
-  def getDoc(docType: Doc): String = matchFields(docType.toString + FIELD_SEPARATOR) match {
-    case Some(i) => if (i.head == ' ') i.tail else i
+  def getDoc(docType: String): String = matchFields(docType + FIELD_SEPARATOR) match {
+    case Some(i) => if (i.head.toString == WHITE_SPACE) i.tail else i
     case None => ""
   }
 }

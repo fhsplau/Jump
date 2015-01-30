@@ -1,20 +1,24 @@
 package io.jump.suite
 
-object Enums{
+object Enums {
 
-  object Tags extends Enumeration {
-    type Tags = Value
+  object Common {
+
+    val FIELD = "@"
+    val TEST_SCENARIO = FIELD+"Test scenario:"
+  }
+
+  object Tags {
 
     private val TAG_FIELD_END = " tags"
 
-    val SUITE = Value("@Suite"+TAG_FIELD_END)
-    val TEST = Value("@Test"+TAG_FIELD_END)
+    val SUITE_TAG = "@Suite" + TAG_FIELD_END
+    val TEST_TAG = "@Test" + TAG_FIELD_END
   }
 
-  object Doc extends Enumeration {
-    type Doc = Value
-
-    val SUITE = Value("@Documentation")
-    val TEST = Value("@Test scenario")
+  object Doc {
+    val SUITE_DOC = "@Documentation"
+    val TEST_DOC = "@Test scenario"
   }
+
 }

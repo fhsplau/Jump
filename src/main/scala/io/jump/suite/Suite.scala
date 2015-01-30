@@ -1,7 +1,11 @@
 package io.jump.suite
 
 import java.io.{File, FileNotFoundException}
-import Enums._
+
+import io.jump.suite.Enums.Tags._
+import io.jump.suite.Enums.Doc._
+import io.jump.suite.Enums.Common._
+
 import scala.io.Source
 
 // TODO create deleteWhiteSpaces method
@@ -28,9 +32,9 @@ case class Suite(private val path: String) extends SuiteContent {
 
   override protected val content = getContent(path)
 
-  override val tags: List[String] = getTags(Tags.SUITE)
+  override val tags: List[String] = getTags(SUITE_TAG)
 
-  override val doc: String = getDoc(Doc.SUITE)
+  override val doc: String = getDoc(SUITE_DOC)
 
   override val tests: List[Test] = {
     def createTest(a: Int, b: Int): Test = new Test(getTest(a, b))
@@ -39,7 +43,7 @@ case class Suite(private val path: String) extends SuiteContent {
       if (lines.isEmpty) acc
       else findTests(
         lines.tail,
-        if (lines.head.contains(Tags.TEST.toString)) acc ::: List(currLine) else acc,
+        if (lines.head.contains(TEST_SCENARIO)) acc ::: List(currLine) else acc,
         currLine + 1
       )
 
@@ -51,7 +55,7 @@ case class Suite(private val path: String) extends SuiteContent {
 
     def getTest(b: Int, e: Int): List[String] =
       if (b >= e) List()
-      else List(content(b).replace("  ", "")) ::: getTest(b + 1, e)
+      else List(content(b).replace(WHITE_SPACE*2, EMPTY)) ::: getTest(b + 1, e)
 
     getTests(findTests(content, List(), 0))
   }
