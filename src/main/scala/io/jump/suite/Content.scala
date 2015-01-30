@@ -1,34 +1,31 @@
 package io.jump.suite
 
-sealed trait Separators {
+sealed trait Common {
+  val FIELD_POINTER = "@"
   val FIELD_SEPARATOR = ":"
   val TAG_SEPARATOR = ","
   val WHITE_SPACE = " "
   val EMPTY_STRING = ""
 }
 
-sealed trait Common {
-  val FIELD = "@"
-}
-
 sealed trait Tags extends Common {
 
-  private val TAG_FIELD_END = " tags"
+  private val TAG_FIELD_END = " tags" + FIELD_SEPARATOR
 
-  val SUITE_TAG = FIELD + "Suite" + TAG_FIELD_END
-  val TEST_TAG = FIELD + "Test" + TAG_FIELD_END
+  val SUITE_TAG = FIELD_POINTER + "Suite" + TAG_FIELD_END
+  val TEST_TAG = FIELD_POINTER + "Test" + TAG_FIELD_END
 }
 
 sealed trait Doc extends Common {
-  val SUITE_DOC = FIELD + "Documentation"
-  val TEST_DOC = FIELD + "Test scenario"
+  val SUITE_DOC = FIELD_POINTER + "Documentation"
+  val TEST_DOC = FIELD_POINTER + "Test scenario"
 }
 
 sealed trait TestScenario extends Common {
-  val TEST_SCENARIO = FIELD + "Test scenario:"
+  val TEST_SCENARIO = FIELD_POINTER + "Test scenario:"
 }
 
-sealed trait ContentMatcher extends Separators{
+sealed trait ContentMatcher extends Common{
   protected val content: List[String]
 
   def matchFields(s: String): Option[String] = {
@@ -40,7 +37,7 @@ sealed trait ContentMatcher extends Separators{
     }
   }
 
-  def getTags(tagsType: String): List[String] = matchFields(tagsType + FIELD_SEPARATOR) match {
+  def getTags(tagsType: String): List[String] = matchFields(tagsType) match {
     case Some(i) => i.split(TAG_SEPARATOR).toList.map(_.replace(WHITE_SPACE, EMPTY_STRING))
     case None => List()
   }

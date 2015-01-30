@@ -15,7 +15,7 @@ case class Test(private val testList: List[String]) extends TestContent {
     def getSteps(l: List[String]): List[Step] =
       if (l.isEmpty) List()
       else (
-        if (l.head.contains(FIELD) || l.head.size <= 1) List()
+        if (l.head.contains(FIELD_POINTER) || l.head.size <= 1) List()
         else List(new Step(l.head))
         ) ::: getSteps(l.tail)
     getSteps(content)
