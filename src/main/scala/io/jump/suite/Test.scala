@@ -1,7 +1,5 @@
 package io.jump.suite
 
-import io.jump.suite.Properties._
-
 sealed trait TestContent extends Content {
   val steps: List[Step]
 }

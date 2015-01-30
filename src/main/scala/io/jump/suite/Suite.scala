@@ -2,8 +2,6 @@ package io.jump.suite
 
 import java.io.{File, FileNotFoundException}
 
-import io.jump.suite.Properties._
-
 import scala.io.Source
 
 // TODO create deleteWhiteSpaces method
@@ -53,7 +51,7 @@ case class Suite(private val path: String) extends SuiteContent {
 
     def getTest(b: Int, e: Int): List[String] =
       if (b >= e) List()
-      else List(content(b).replace(WHITE_SPACE*2, EMPTY)) ::: getTest(b + 1, e)
+      else List(content(b).replace(WHITE_SPACE*2, EMPTY_STRING)) ::: getTest(b + 1, e)
 
     getTests(findTests(content, List(), 0))
   }
