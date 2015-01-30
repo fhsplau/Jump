@@ -2,9 +2,7 @@ package io.jump.suite
 
 import java.io.{File, FileNotFoundException}
 
-import io.jump.suite.Enums.Tags._
-import io.jump.suite.Enums.Doc._
-import io.jump.suite.Enums.Common._
+import io.jump.suite.Properties._
 
 import scala.io.Source
 

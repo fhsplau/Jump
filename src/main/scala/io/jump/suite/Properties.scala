@@ -17,10 +17,10 @@ sealed trait Doc extends Common {
   val TEST_DOC = FIELD + "Test scenario"
 }
 
-sealed trait Test extends Common {
+sealed trait TestScenario extends Common {
   val TEST_SCENARIO = FIELD + "Test scenario:"
 }
 
-sealed abstract class Fields extends Tags with Doc with Test
+sealed abstract class Fields extends Tags with Doc with TestScenario
 
 object Properties extends Fields
