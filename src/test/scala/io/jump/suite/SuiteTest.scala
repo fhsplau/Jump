@@ -6,10 +6,10 @@ import org.scalatest.{BeforeAndAfter, FunSuite}
 
 @RunWith(classOf[JUnitRunner])
 class SuiteTest extends FunSuite with BeforeAndAfter {
-
+  var myName: String= _
   var suite: Suite = _
   var suite2: Suite = _
-  val path = "/Users/piotr.kacprzak/svn/Jump/src/test/BDD"
+  val path = "/Users/"+myName+"/svn/Jump/src/test/BDD"
   val name = "my_bdd_test.suite"
   val name2 = "my_bdd_test2.suite"
   val suiteTags = List("new", "ok")
