@@ -51,7 +51,6 @@ sealed trait ContentMatcher extends Common {
   }
 }
 
-//  Get or else
 abstract class Content extends ContentMatcher with Tags with Doc with TestScenario {
 
   val name: String
